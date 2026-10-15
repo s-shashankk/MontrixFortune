@@ -1,0 +1,14 @@
+node_modules
+target
+dist
+.git
+.github
+.idea
+.vscode
+.env
+.env.*
+.backup-before-hardening
+tools
+scripts
+*.md
+*.zip

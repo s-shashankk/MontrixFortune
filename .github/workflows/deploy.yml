@@ -1,0 +1,32 @@
+name: Deploy to Hostinger VPS
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Deploy to Hostinger
+        uses: hostinger/deploy-action@v1
+        with:
+          api-key: ${{ secrets.HOSTINGER_API_KEY }}
+          virtual-machine: ${{ vars.HOSTINGER_VM_ID }}
+          project-name: montrixfortune
+          personal-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          docker-compose-path: docker-compose.yml
+          environment-variables: |
+            DOMAIN=${{ vars.DOMAIN }}
+            MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}
+            RAZORPAY_KEY=${{ secrets.RAZORPAY_KEY }}
+            RAZORPAY_SECRET=${{ secrets.RAZORPAY_SECRET }}
+            RAZORPAY_WEBHOOK_SECRET=${{ secrets.RAZORPAY_WEBHOOK_SECRET }}
+            VITE_RAZORPAY_KEY_ID=${{ vars.VITE_RAZORPAY_KEY_ID }}
+            ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}
+            ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}

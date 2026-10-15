@@ -1,0 +1,402 @@
+[
+  {
+    "category": "Living",
+    "name": "Oslo 3-Seater Fabric Sofa - Graphite Grey",
+    "description": "Three-seater sofa with a solid sheesham wood frame, high-resilience foam cushions and durable textured fabric upholstery. Removable seat cushions, wooden legs. Size: 215 x 88 x 85 cm (L x D x H). Seat height 42 cm.",
+    "price": 32999,
+    "stockQuantity": 12,
+    "imageUrl": "/products/oslo-3-seater-fabric-sofa-graphite-grey.svg"
+  },
+  {
+    "category": "Living",
+    "name": "Milan 2-Seater Velvet Sofa - Emerald Green",
+    "description": "Compact two-seater loveseat in soft velvet fabric with a kiln-dried wood frame and high-density foam seating. Ideal for small living rooms and bedrooms. Size: 150 x 82 x 80 cm (L x D x H).",
+    "price": 24499,
+    "stockQuantity": 15,
+    "imageUrl": "/products/milan-2-seater-velvet-sofa-emerald-green.svg"
+  },
+  {
+    "category": "Living",
+    "name": "Aspen L-Shape Sectional Sofa - Sand Beige",
+    "description": "Six-seater L-shape sectional with a reversible chaise, plush foam seating and stain-resistant fabric. Sturdy engineered-wood and pine frame with sheesham legs. Size: 275 x 160 x 85 cm (L x D x H).",
+    "price": 54999,
+    "stockQuantity": 8,
+    "imageUrl": "/products/aspen-l-shape-sectional-sofa-sand-beige.svg"
+  },
+  {
+    "category": "Living",
+    "name": "Nova Single Seater Recliner - Tan",
+    "description": "Manual push-back recliner in tan leatherette with a padded headrest and extendable footrest. Hardwood-reinforced frame with high-density foam. Size: 90 x 95 x 100 cm (W x D x H).",
+    "price": 21999,
+    "stockQuantity": 14,
+    "imageUrl": "/products/nova-single-seater-recliner-tan.svg"
+  },
+  {
+    "category": "Living",
+    "name": "Cove Accent Chair - Mustard Yellow",
+    "description": "Curved-back accent chair with soft velvet fabric, foam-padded seat and solid rubberwood tapered legs. A statement piece for reading corners and bedrooms. Size: 70 x 72 x 78 cm (W x D x H).",
+    "price": 8999,
+    "stockQuantity": 20,
+    "imageUrl": "/products/cove-accent-chair-mustard-yellow.svg"
+  },
+  {
+    "category": "Living",
+    "name": "Terra Sheesham Wood Coffee Table",
+    "description": "Handcrafted coffee table made from solid sheesham wood with a natural honey finish and a lower storage shelf. Size: 100 x 55 x 45 cm (L x W x H).",
+    "price": 9499,
+    "stockQuantity": 18,
+    "imageUrl": "/products/terra-sheesham-wood-coffee-table.svg"
+  },
+  {
+    "category": "Living",
+    "name": "Zen Nesting Tables - Set of 2",
+    "description": "Set of two space-saving nesting tables in engineered wood with a scratch-resistant laminate top and powder-coated legs. Large: 50 x 40 x 50 cm. Small: 38 x 30 x 42 cm.",
+    "price": 5999,
+    "stockQuantity": 25,
+    "imageUrl": "/products/zen-nesting-tables-set-of-2.svg"
+  },
+  {
+    "category": "Living",
+    "name": "Vista TV Unit 180 cm - Walnut Finish",
+    "description": "Entertainment unit for TVs up to 65 inches with three storage compartments, cable management and soft-close doors. Prelaminated engineered wood in a walnut finish. Size: 180 x 40 x 45 cm (L x D x H).",
+    "price": 17999,
+    "stockQuantity": 16,
+    "imageUrl": "/products/vista-tv-unit-180-cm-walnut-finish.svg"
+  },
+  {
+    "category": "Living",
+    "name": "Arden 5-Tier Bookshelf - Walnut",
+    "description": "Five-tier open bookshelf with sturdy engineered-wood shelves (10 kg per shelf) and an anti-tip wall fixing. Size: 80 x 30 x 180 cm (W x D x H).",
+    "price": 7499,
+    "stockQuantity": 22,
+    "imageUrl": "/products/arden-5-tier-bookshelf-walnut.svg"
+  },
+  {
+    "category": "Living",
+    "name": "Pico Shoe Rack Cabinet - 3 Flip Drawers",
+    "description": "Slim shoe cabinet with three flip-down compartments holding up to 12 pairs. Engineered wood with a matte finish. Size: 80 x 24 x 100 cm (W x D x H).",
+    "price": 4999,
+    "stockQuantity": 30,
+    "imageUrl": "/products/pico-shoe-rack-cabinet-3-flip-drawers.svg"
+  },
+  {
+    "category": "Bedroom",
+    "name": "Regal King Size Bed with Box Storage - Sheesham",
+    "description": "King size bed in solid sheesham wood with a carved headboard and hydraulic box storage. Fits a 78 x 72 inch mattress (sold separately). Size: 195 x 215 x 100 cm (W x L x H).",
+    "price": 38999,
+    "stockQuantity": 7,
+    "imageUrl": "/products/regal-king-size-bed-with-box-storage-sheesham.svg"
+  },
+  {
+    "category": "Bedroom",
+    "name": "Luna Queen Size Upholstered Bed - Slate Grey",
+    "description": "Queen size bed with a tufted upholstered headboard, solid wood frame and slat base. Fits a 78 x 60 inch mattress (sold separately). Size: 165 x 210 x 110 cm (W x L x H).",
+    "price": 29999,
+    "stockQuantity": 10,
+    "imageUrl": "/products/luna-queen-size-upholstered-bed-slate-grey.svg"
+  },
+  {
+    "category": "Bedroom",
+    "name": "Haven Single Bed - Walnut Finish",
+    "description": "Single bed in engineered wood with a clean-line headboard and sturdy slats. Fits a 75 x 36 inch mattress (sold separately). Size: 100 x 205 x 85 cm (W x L x H).",
+    "price": 12499,
+    "stockQuantity": 18,
+    "imageUrl": "/products/haven-single-bed-walnut-finish.svg"
+  },
+  {
+    "category": "Bedroom",
+    "name": "Aria 3-Door Wardrobe with Mirror",
+    "description": "Spacious three-door wardrobe with a full-length mirror, two hanging sections, four shelves and a locker drawer. Engineered wood with a lacquered finish. Size: 150 x 52 x 200 cm (W x D x H).",
+    "price": 27999,
+    "stockQuantity": 9,
+    "imageUrl": "/products/aria-3-door-wardrobe-with-mirror.svg"
+  },
+  {
+    "category": "Bedroom",
+    "name": "Cedar 2-Door Wardrobe - Rustic Oak",
+    "description": "Two-door wardrobe with a hanging rod, three shelves and a bottom drawer. Prelaminated engineered wood. Size: 100 x 50 x 180 cm (W x D x H).",
+    "price": 16999,
+    "stockQuantity": 13,
+    "imageUrl": "/products/cedar-2-door-wardrobe-rustic-oak.svg"
+  },
+  {
+    "category": "Bedroom",
+    "name": "Slate Dressing Table with Mirror and Stool",
+    "description": "Dressing table with a framed oval mirror, three drawers and a cushioned stool. Engineered wood with a matte finish. Size: 90 x 40 x 150 cm (W x D x H, with mirror).",
+    "price": 11999,
+    "stockQuantity": 14,
+    "imageUrl": "/products/slate-dressing-table-with-mirror-and-stool.svg"
+  },
+  {
+    "category": "Bedroom",
+    "name": "Pearl Bedside Table with 2 Drawers",
+    "description": "Bedside table with two soft-close drawers and a flat top for a lamp and phone. Engineered wood with a walnut finish. Size: 45 x 40 x 55 cm (W x D x H).",
+    "price": 3999,
+    "stockQuantity": 28,
+    "imageUrl": "/products/pearl-bedside-table-with-2-drawers.svg"
+  },
+  {
+    "category": "Bedroom",
+    "name": "Willow Chest of 4 Drawers",
+    "description": "Four-drawer chest with smooth-glide runners and metal handles for clothes and linen. Engineered wood. Size: 75 x 40 x 105 cm (W x D x H).",
+    "price": 13499,
+    "stockQuantity": 11,
+    "imageUrl": "/products/willow-chest-of-4-drawers.svg"
+  },
+  {
+    "category": "Bedroom",
+    "name": "Nest Bunk Bed with Ladder and Safety Rails",
+    "description": "Sturdy bunk bed in pine wood with a side ladder and full safety rails. Fits two 75 x 36 inch mattresses (sold separately). Size: 105 x 205 x 160 cm (W x L x H).",
+    "price": 26999,
+    "stockQuantity": 6,
+    "imageUrl": "/products/nest-bunk-bed-with-ladder-and-safety-rails.svg"
+  },
+  {
+    "category": "Bedroom",
+    "name": "Alder Upholstered Bed-End Bench",
+    "description": "Bench for the foot of the bed with a tufted fabric top, foam padding and solid wood legs. Size: 110 x 40 x 45 cm (L x D x H).",
+    "price": 6999,
+    "stockQuantity": 17,
+    "imageUrl": "/products/alder-upholstered-bed-end-bench.svg"
+  },
+  {
+    "category": "Dining",
+    "name": "Kaveri 6-Seater Sheesham Dining Set",
+    "description": "Complete dining set: solid sheesham wood table with six cushioned chairs. Natural honey finish, seats six comfortably. Table size: 180 x 90 x 76 cm (L x W x H).",
+    "price": 58999,
+    "stockQuantity": 5,
+    "imageUrl": "/products/kaveri-6-seater-sheesham-dining-set.svg"
+  },
+  {
+    "category": "Dining",
+    "name": "Mira 4-Seater Dining Set - Walnut",
+    "description": "Four-seater dining set with a rectangular table and four chairs with cushioned seats. Rubberwood and engineered wood in walnut finish. Table size: 120 x 75 x 76 cm (L x W x H).",
+    "price": 32999,
+    "stockQuantity": 9,
+    "imageUrl": "/products/mira-4-seater-dining-set-walnut.svg"
+  },
+  {
+    "category": "Dining",
+    "name": "Orion Round 4-Seater Dining Table - Marble Top",
+    "description": "Round pedestal dining table with a marble-look tempered-glass top and metal base. Seats four. Size: 105 cm diameter x 76 cm height.",
+    "price": 27999,
+    "stockQuantity": 7,
+    "imageUrl": "/products/orion-round-4-seater-dining-table-marble-top.svg"
+  },
+  {
+    "category": "Dining",
+    "name": "Vedic 6-Seater Dining Table - Solid Wood",
+    "description": "Table only, in solid mango wood with a scratch-resistant finish. Seats six. Size: 165 x 90 x 76 cm (L x W x H).",
+    "price": 36999,
+    "stockQuantity": 8,
+    "imageUrl": "/products/vedic-6-seater-dining-table-solid-wood.svg"
+  },
+  {
+    "category": "Dining",
+    "name": "Cane Back Dining Chairs - Set of 2",
+    "description": "Pair of dining chairs with woven cane backs, padded seats and solid rubberwood legs. Size (each): 45 x 50 x 90 cm (W x D x H).",
+    "price": 8999,
+    "stockQuantity": 24,
+    "imageUrl": "/products/cane-back-dining-chairs-set-of-2.svg"
+  },
+  {
+    "category": "Dining",
+    "name": "Bistro Bar Stools - Set of 2",
+    "description": "Pair of bar stools with cushioned seats, footrest rings and sturdy iron frames. Seat height 75 cm. Great for kitchen counters.",
+    "price": 7499,
+    "stockQuantity": 20,
+    "imageUrl": "/products/bistro-bar-stools-set-of-2.svg"
+  },
+  {
+    "category": "Dining",
+    "name": "Dahlia Crockery Cabinet with Glass Doors",
+    "description": "Tall crockery unit with glass upper doors, adjustable shelves and a closed lower storage section. Engineered wood. Size: 90 x 38 x 180 cm (W x D x H).",
+    "price": 21999,
+    "stockQuantity": 6,
+    "imageUrl": "/products/dahlia-crockery-cabinet-with-glass-doors.svg"
+  },
+  {
+    "category": "Dining",
+    "name": "Marlo 4-Door Sideboard - Teak Finish",
+    "description": "Four-door sideboard for crockery and serveware with fixed shelves and metal handles. Engineered wood with a teak finish. Size: 150 x 40 x 80 cm (L x D x H).",
+    "price": 24999,
+    "stockQuantity": 8,
+    "imageUrl": "/products/marlo-4-door-sideboard-teak-finish.svg"
+  },
+  {
+    "category": "Dining",
+    "name": "Foldo Folding Dining Table - 4 Seater",
+    "description": "Drop-leaf folding table that opens to seat four and folds flat to save space. Engineered wood with a scratch-resistant top. Size (open): 120 x 70 x 75 cm.",
+    "price": 12999,
+    "stockQuantity": 16,
+    "imageUrl": "/products/foldo-folding-dining-table-4-seater.svg"
+  },
+  {
+    "category": "Dining",
+    "name": "Rolla Kitchen Trolley - 3 Tier",
+    "description": "Three-tier rolling trolley with lockable wheels and a sturdy handle for kitchen storage and serving. Powder-coated iron with wood shelves. Size: 50 x 35 x 85 cm.",
+    "price": 6499,
+    "stockQuantity": 25,
+    "imageUrl": "/products/rolla-kitchen-trolley-3-tier.svg"
+  },
+  {
+    "category": "Mattress",
+    "name": "Montrix Comfort Foam Mattress - Single (75 x 36 x 5 in)",
+    "description": "Five-inch high-density foam mattress with a quilted breathable cover. Medium-firm support for everyday use. Size: 75 x 36 x 5 inches. 5-year warranty.",
+    "price": 5499,
+    "stockQuantity": 30,
+    "imageUrl": "/products/montrix-comfort-foam-mattress-single-75-x-36-x-5-in.svg"
+  },
+  {
+    "category": "Mattress",
+    "name": "Montrix Orthopedic Memory Foam Mattress - Queen (78 x 60 x 6 in)",
+    "description": "Six-inch memory foam mattress with an orthopedic support base for back-pain relief. Pressure-relieving, with a removable washable cover. Size: 78 x 60 x 6 inches. 7-year warranty.",
+    "price": 17999,
+    "stockQuantity": 14,
+    "imageUrl": "/products/montrix-orthopedic-memory-foam-mattress-queen-78-x-60-x-6-in.svg"
+  },
+  {
+    "category": "Mattress",
+    "name": "Montrix Pocket Spring Mattress - King (78 x 72 x 8 in)",
+    "description": "Eight-inch pocket spring mattress with a foam comfort layer. Individually wrapped springs reduce motion transfer for couples. Size: 78 x 72 x 8 inches. 10-year warranty.",
+    "price": 28999,
+    "stockQuantity": 9,
+    "imageUrl": "/products/montrix-pocket-spring-mattress-king-78-x-72-x-8-in.svg"
+  },
+  {
+    "category": "Mattress",
+    "name": "Montrix Dual Comfort Mattress - Queen (78 x 60 x 8 in)",
+    "description": "Reversible mattress: a firm side for back support and a soft side for comfort. Eight-inch foam construction. Size: 78 x 60 x 8 inches. 8-year warranty.",
+    "price": 14499,
+    "stockQuantity": 12,
+    "imageUrl": "/products/montrix-dual-comfort-mattress-queen-78-x-60-x-8-in.svg"
+  },
+  {
+    "category": "Mattress",
+    "name": "Montrix Bonnell Spring Mattress - Double (75 x 48 x 6 in)",
+    "description": "Six-inch bonnell spring mattress with a firm, even surface and a durable knitted cover. Size: 75 x 48 x 6 inches. 5-year warranty.",
+    "price": 11999,
+    "stockQuantity": 15,
+    "imageUrl": "/products/montrix-bonnell-spring-mattress-double-75-x-48-x-6-in.svg"
+  },
+  {
+    "category": "Mattress",
+    "name": "Montrix Latex Hybrid Mattress - King (78 x 72 x 10 in)",
+    "description": "Ten-inch hybrid mattress combining natural latex, pocket springs and a cooling cover. Premium comfort with strong edge support. Size: 78 x 72 x 10 inches. 10-year warranty.",
+    "price": 42999,
+    "stockQuantity": 6,
+    "imageUrl": "/products/montrix-latex-hybrid-mattress-king-78-x-72-x-10-in.svg"
+  },
+  {
+    "category": "Mattress",
+    "name": "Montrix Kids Foam Mattress - Single (72 x 30 x 4 in)",
+    "description": "Four-inch firm foam mattress sized for kids, with a hypoallergenic, waterproof-backed cover. Size: 72 x 30 x 4 inches. 3-year warranty.",
+    "price": 3999,
+    "stockQuantity": 24,
+    "imageUrl": "/products/montrix-kids-foam-mattress-single-72-x-30-x-4-in.svg"
+  },
+  {
+    "category": "Mattress",
+    "name": "Montrix Cooling Gel Memory Foam Mattress - King (78 x 72 x 8 in)",
+    "description": "Eight-inch memory foam mattress infused with cooling gel for hot sleepers, with a breathable cover. Size: 78 x 72 x 8 inches. 10-year warranty.",
+    "price": 33999,
+    "stockQuantity": 8,
+    "imageUrl": "/products/montrix-cooling-gel-memory-foam-mattress-king-78-x-72-x-8-in.svg"
+  },
+  {
+    "category": "Mattress",
+    "name": "Montrix Coir Mattress - Double (75 x 48 x 5 in)",
+    "description": "Firm coir mattress with a rubberised coir core, natural and breathable. Good for those who prefer a hard surface. Size: 75 x 48 x 5 inches. 3-year warranty.",
+    "price": 8499,
+    "stockQuantity": 18,
+    "imageUrl": "/products/montrix-coir-mattress-double-75-x-48-x-5-in.svg"
+  },
+  {
+    "category": "Mattress",
+    "name": "Montrix Memory Foam Mattress Topper - Queen (78 x 60 x 2 in)",
+    "description": "Two-inch memory foam topper that adds cushioning to a firm mattress. Anchor straps keep it in place. Size: 78 x 60 x 2 inches. 2-year warranty.",
+    "price": 4999,
+    "stockQuantity": 26,
+    "imageUrl": "/products/montrix-memory-foam-mattress-topper-queen-78-x-60-x-2-in.svg"
+  },
+  {
+    "category": "Decor",
+    "name": "Arc Floor Lamp - Brass Finish",
+    "description": "Arc floor lamp with a metal stand in brass finish, a linen drum shade and a weighted base. E27 holder (bulb not included). Height: 170 cm.",
+    "price": 4999,
+    "stockQuantity": 20,
+    "imageUrl": "/products/arc-floor-lamp-brass-finish.svg"
+  },
+  {
+    "category": "Decor",
+    "name": "Ceramic Table Lamp - Teal",
+    "description": "Handmade ceramic base table lamp with a cotton shade. E27 holder (bulb not included). Height: 45 cm.",
+    "price": 1999,
+    "stockQuantity": 35,
+    "imageUrl": "/products/ceramic-table-lamp-teal.svg"
+  },
+  {
+    "category": "Decor",
+    "name": "Round Wall Mirror 60 cm - Gold Frame",
+    "description": "Round decorative mirror with a slim metal frame in gold finish. Easy hanging hook included. Diameter: 60 cm.",
+    "price": 3499,
+    "stockQuantity": 22,
+    "imageUrl": "/products/round-wall-mirror-60-cm-gold-frame.svg"
+  },
+  {
+    "category": "Decor",
+    "name": "Ceramic Vase Set of 3 - Sage Green",
+    "description": "Set of three hand-glazed ceramic vases in different heights, in sage green. Heights: 15 cm, 20 cm and 25 cm.",
+    "price": 1799,
+    "stockQuantity": 40,
+    "imageUrl": "/products/ceramic-vase-set-of-3-sage-green.svg"
+  },
+  {
+    "category": "Decor",
+    "name": "Handwoven Jute Area Rug 5 x 7 ft",
+    "description": "Natural jute rug, handwoven by artisans, with a braided pattern. Durable and eco-friendly. Size: 5 x 7 feet (152 x 213 cm).",
+    "price": 4299,
+    "stockQuantity": 15,
+    "imageUrl": "/products/handwoven-jute-area-rug-5-x-7-ft.svg"
+  },
+  {
+    "category": "Decor",
+    "name": "Abstract Canvas Wall Art - Set of 3",
+    "description": "Set of three framed abstract canvas prints, ready to hang. Each panel: 30 x 60 cm.",
+    "price": 2999,
+    "stockQuantity": 18,
+    "imageUrl": "/products/abstract-canvas-wall-art-set-of-3.svg"
+  },
+  {
+    "category": "Decor",
+    "name": "Wooden Wall Clock 24 Inch - Silent Sweep",
+    "description": "Large 24-inch wall clock with a wooden frame and a silent sweep movement. Requires 1 AA battery (not included).",
+    "price": 1599,
+    "stockQuantity": 28,
+    "imageUrl": "/products/wooden-wall-clock-24-inch-silent-sweep.svg"
+  },
+  {
+    "category": "Decor",
+    "name": "Cotton Cushion Covers 16 x 16 in - Set of 5",
+    "description": "Set of five cotton cushion covers with a concealed zip. Machine washable. Size: 16 x 16 inches (40 x 40 cm). Inserts not included.",
+    "price": 999,
+    "stockQuantity": 60,
+    "imageUrl": "/products/cotton-cushion-covers-16-x-16-in-set-of-5.svg"
+  },
+  {
+    "category": "Decor",
+    "name": "Blackout Curtains 7 ft - Pair (Eyelet)",
+    "description": "Pair of thermal blackout curtains with eyelets for easy hanging. Blocks light and reduces noise. Size: 4.5 ft wide x 7 ft drop each.",
+    "price": 1899,
+    "stockQuantity": 32,
+    "imageUrl": "/products/blackout-curtains-7-ft-pair-eyelet.svg"
+  },
+  {
+    "category": "Decor",
+    "name": "Scented Soy Candle Gift Set - 3 Jars",
+    "description": "Gift box of three soy wax scented candles in glass jars: lavender, vanilla and sandalwood. Burn time about 25 hours each.",
+    "price": 799,
+    "stockQuantity": 45,
+    "imageUrl": "/products/scented-soy-candle-gift-set-3-jars.svg"
+  }
+]

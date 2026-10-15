@@ -1,0 +1,77 @@
+﻿@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+@layer base {
+  html, body, #root {
+    min-height: 100%;
+  }
+
+  body {
+    @apply text-slate-800;
+    font-family: "Manrope", sans-serif;
+    background: radial-gradient(circle at 20% 0%, #fdf6dd 0%, #f8f3e6 28%, #f5f1e8 56%, #f6f4ef 100%);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: -0.015em;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-semibold tracking-wide transition-all duration-200 inline-flex items-center justify-center gap-2;
+  }
+
+  .btn-primary {
+    @apply text-[#1f2937] shadow-sm hover:shadow-lg;
+    background: linear-gradient(135deg, #f7e7b8 0%, #e9cf8a 45%, #d9b561 100%);
+  }
+
+  .btn-secondary {
+    @apply border text-slate-200 hover:text-white;
+    background: linear-gradient(135deg, #25314d 0%, #182036 100%);
+    border-color: #314062;
+  }
+
+  .btn-danger {
+    @apply bg-rose-700 text-white hover:bg-rose-800 shadow-sm hover:shadow-md;
+  }
+
+  .card {
+    @apply rounded-xl shadow-sm hover:shadow-xl border transition-all duration-300 p-5;
+    background: linear-gradient(180deg, #ffffff 0%, #fffdf8 100%);
+    border-color: #ead8ac;
+  }
+
+  .input {
+    @apply w-full px-3.5 py-2.5 rounded-lg border bg-white/90 focus:outline-none focus:ring-2;
+    border-color: #d5c8a2;
+    --tw-ring-color: #ecd9a4;
+  }
+
+  .form-label {
+    @apply block text-sm font-semibold text-stone-700 mb-2;
+  }
+
+  .page-section {
+    @apply min-h-screen bg-slate-50;
+  }
+
+  .empty-state {
+    @apply text-center py-20;
+  }
+}
+
+/* Policy / info pages */
+.legal-prose { margin-top: 1.5rem; color: #44403c; line-height: 1.75; }
+.legal-prose h2 { font-size: 1.25rem; font-weight: 700; color: #1c1917; margin: 1.75rem 0 0.5rem; }
+.legal-prose h3 { font-size: 1.05rem; font-weight: 600; color: #1c1917; margin: 1.25rem 0 0.4rem; }
+.legal-prose p { margin: 0.6rem 0; }
+.legal-prose ul { list-style: disc; padding-left: 1.4rem; margin: 0.6rem 0; }
+.legal-prose ol { list-style: decimal; padding-left: 1.4rem; margin: 0.6rem 0; }
+.legal-prose li { margin: 0.3rem 0; }
+.legal-prose a { color: #92400e; text-decoration: underline; }
+.legal-prose strong { color: #1c1917; }
+.legal-prose table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+.legal-prose th, .legal-prose td { border: 1px solid #e7e5e4; padding: 0.5rem 0.75rem; text-align: left; }

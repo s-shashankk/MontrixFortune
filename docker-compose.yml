@@ -1,0 +1,69 @@
+# One command starts everything:  docker compose up -d --build
+# All settings come from environment variables (a local .env file or the GitHub deploy workflow).
+services:
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: montrix_furniture
+      MYSQL_USER: montrix_app
+      MYSQL_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD}
+      TZ: Asia/Kolkata
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max_allowed_packet=64M
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    # No "ports:" on purpose: the database is reachable only from the other containers.
+
+  backend:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:mysql://db:3306/montrix_furniture?useSSL=false&allowPublicKeyRetrieval=true
+      DB_USERNAME: montrix_app
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:?set JWT_REFRESH_SECRET}
+      RAZORPAY_KEY: ${RAZORPAY_KEY:?set RAZORPAY_KEY}
+      RAZORPAY_SECRET: ${RAZORPAY_SECRET:?set RAZORPAY_SECRET}
+      RAZORPAY_WEBHOOK_SECRET: ${RAZORPAY_WEBHOOK_SECRET:?set RAZORPAY_WEBHOOK_SECRET}
+      APP_CORS_ORIGINS: https://${DOMAIN:-localhost}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      ADMIN_NAME: ${ADMIN_NAME:-Store Admin}
+      APP_SEED_CATALOG: ${APP_SEED_CATALOG:-true}
+      APP_SEED_DEMO_USERS: "false"
+      DDL_AUTO: update
+      TZ: Asia/Kolkata
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+      args:
+        VITE_API_URL: ""
+        VITE_RAZORPAY_KEY_ID: ${VITE_RAZORPAY_KEY_ID:-}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:-:80}
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  mysql_data:
+  caddy_data:
+  caddy_config:
