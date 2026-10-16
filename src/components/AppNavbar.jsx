@@ -17,11 +17,12 @@ export default function AppNavbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm bg-gradient-to-br from-[#243250] to-[#111827] border border-amber-200/30">
-              <span className="text-[#f6df9a] font-bold text-lg">MF</span>
-            </div>
-            <span className="font-bold text-xl text-[#1f2a44] hidden sm:inline">Montrix Fortune</span>
+          <Link to="/" className="flex items-center shrink-0" aria-label="Montrix Fortune - Home">
+            <img
+              src="/logo.png"
+              alt="Montrix Fortune - Manufacture of all kind Modular Furniture"
+              className="h-8 sm:h-11 w-auto"
+            />
           </Link>
 
           {/* Center Nav Links */}
@@ -36,7 +37,7 @@ export default function AppNavbar() {
           </nav>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             {auth && (
               <Link to="/orders" className="md:hidden text-sm font-semibold text-[#2f3d61] hover:text-[#111827] transition">
                 Orders
@@ -57,9 +58,9 @@ export default function AppNavbar() {
                 </button>
               </div>
             ) : (
-              <div className="flex gap-2">
-                <Link to="/login" className="btn btn-secondary text-sm">Login</Link>
-                <Link to="/register" className="btn btn-primary text-sm">Sign Up</Link>
+              <div className="flex gap-1.5 sm:gap-2">
+                <Link to="/login" className="btn btn-secondary text-sm px-3! sm:px-4!">Login</Link>
+                <Link to="/register" className="btn btn-primary text-sm px-3! sm:px-4!">Sign Up</Link>
               </div>
             )}
           </div>

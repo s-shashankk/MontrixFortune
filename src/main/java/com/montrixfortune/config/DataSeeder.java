@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.montrixfortune.entity.Category;
 import com.montrixfortune.entity.HeroSlide;
+import com.montrixfortune.entity.Project;
 import com.montrixfortune.entity.Product;
 import com.montrixfortune.entity.User;
 import com.montrixfortune.enums.UserRole;
@@ -11,6 +12,7 @@ import com.montrixfortune.repository.CartItemRepository;
 import com.montrixfortune.repository.CategoryRepository;
 import com.montrixfortune.repository.HeroSlideRepository;
 import com.montrixfortune.repository.OrderItemRepository;
+import com.montrixfortune.repository.ProjectRepository;
 import com.montrixfortune.repository.ProductRepository;
 import com.montrixfortune.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +58,7 @@ public class DataSeeder implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
     private final HeroSlideRepository heroSlideRepository;
+    private final ProjectRepository projectRepository;
     private final CartItemRepository cartItemRepository;
     private final OrderItemRepository orderItemRepository;
     private final PasswordEncoder passwordEncoder;
@@ -98,6 +101,7 @@ public class DataSeeder implements CommandLineRunner {
 
         if (seedCatalog) {
             seedHeroSlides();
+            seedProjects();
         }
 
         List<User> usersWithNoRole = userRepository.findByRoleIsNull();
@@ -267,5 +271,59 @@ public class DataSeeder implements CommandLineRunner {
         slide.setDisplayOrder(displayOrder);
         slide.setActive(true);
         return slide;
+    }
+
+    // ---------------------------------------------------------------- our projects (sample content, editable in Admin > Our Projects)
+
+    private void seedProjects() {
+        if (projectRepository.count() > 0) {
+            return;
+        }
+        projectRepository.saveAll(List.of(
+                buildProject("Lakeview Apartment Makeover",
+                        "A 3-BHK apartment overlooking the lake, furnished from the bare shell to move-in ready in just five weeks.\n\n"
+                                + "We paired a warm sand palette with teal and terracotta accents, a velvet 3-seater sofa for the living room, a "
+                                + "walnut dining set that seats six, and an upholstered king bed with matching bedside tables. Every piece was "
+                                + "chosen to keep the rooms bright, open and easy to live in.",
+                        "lakeview", 8, 1),
+                buildProject("Heritage Villa Living Room",
+                        "A classic villa living room brought up to date without losing its character.\n\n"
+                                + "Sheesham wood furniture, a deep sectional sofa and layered lighting create a space that feels grand yet "
+                                + "welcoming. Custom bookshelves and a handwoven jute rug tie the old architecture to a modern, comfortable layout.",
+                        "heritage", 5, 2),
+                buildProject("Sunrise Cafe & Lounge",
+                        "Seating and decor for a 40-cover neighbourhood cafe designed to keep guests lingering.\n\n"
+                                + "A long counter with brass-topped stools, pendant lights over every table and a mix of lounge chairs and "
+                                + "bistro seating make the room work for quick coffees and long conversations. All furniture is hard-wearing and easy to clean.",
+                        "cafe", 6, 3),
+                buildProject("Urban Studio Loft",
+                        "Smart, space-saving furniture that turns a compact studio into a home and a workspace.\n\n"
+                                + "A storage bed, a fold-away dining table and a tall bookshelf wall keep the floor clear, while a dedicated "
+                                + "desk corner by the window makes working from home comfortable.",
+                        "loft", 4, 4),
+                buildProject("Green Valley Farmhouse Dining",
+                        "A weekend farmhouse built for big family meals and slow afternoons.\n\n"
+                                + "A solid wood 8-seater dining table, cane-back chairs and a sideboard anchor the dining hall, "
+                                + "with cosy living-room seating and plenty of greenery to match the view outside.",
+                        "farmhouse", 5, 5),
+                buildProject("Boutique Hotel Suites",
+                        "Seven guest suites furnished for comfort, durability and a consistent look from room to room.\n\n"
+                                + "Upholstered headboards, premium mattresses, bedside storage and a small lounge corner in each suite. "
+                                + "We supplied, delivered and installed everything in one phase so the hotel opened on schedule.",
+                        "hotel", 7, 6)
+        ));
+    }
+
+    /** Sample images ship with the frontend under /public/projects (e.g. /projects/lakeview-1.svg). */
+    private Project buildProject(String title, String description, String imagePrefix, int imageCount, int displayOrder) {
+        Project project = new Project();
+        project.setTitle(title);
+        project.setDescription(description);
+        for (int i = 1; i <= imageCount; i++) {
+            project.getImages().add("/projects/" + imagePrefix + "-" + i + ".svg");
+        }
+        project.setDisplayOrder(displayOrder);
+        project.setActive(true);
+        return project;
     }
 }

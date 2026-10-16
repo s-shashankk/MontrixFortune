@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import api from "../../api/axios";
 import Loader from "../../components/Loader";
 import { formatINR } from "../../utils/currency";
 
 const MAX_IMAGE_DIMENSION = 1200;
 const MAX_IMAGE_DATA_URL_LENGTH = 350000;
+const MAX_PRODUCT_IMAGES = 4;
 
 const emptyForm = {
   name: "",
   description: "",
   price: "",
   stockQuantity: "",
-  imageUrl: "",
+  images: [],
+  imageUrlInput: "",
   categoryId: "",
+  subCategoryId: "",
   newCategoryName: "",
 };
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
   const [form, setForm] = useState(emptyForm);
   const [categoryMode, setCategoryMode] = useState("existing");
   const [editing, setEditing] = useState(null);
@@ -56,14 +61,35 @@ const AdminProducts = () => {
     }
   };
 
+  const loadSubCategories = async () => {
+    try {
+      const response = await api.get("/api/admin/sub-categories");
+      const payload = response?.data;
+      setSubCategories(Array.isArray(payload) ? payload : payload?.data || []);
+    } catch (err) {
+      console.error("Unable to load sub-categories:", err);
+    }
+  };
+
   useEffect(() => {
     loadCategories();
+    loadSubCategories();
     loadProducts();
   }, []);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    // Changing the category clears the sub-category (it belongs to the old category).
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+      ...(name === "categoryId" ? { subCategoryId: "" } : {}),
+    }));
   };
+
+  const availableSubCategories = subCategories.filter(
+    (sub) => String(sub.categoryId) === String(form.categoryId)
+  );
 
   const resetForm = () => {
     setEditing(null);
@@ -111,19 +137,57 @@ const AdminProducts = () => {
     return createdCategory.id;
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleFileChange = async (e) => {
+    const files = Array.from(e.target.files || []);
+    e.target.value = "";
+    if (files.length === 0) return;
 
     setError("");
-    compressImageFile(file)
-      .then((imageUrl) => {
-        setForm((prev) => ({ ...prev, imageUrl }));
-      })
-      .catch((uploadError) => {
-        console.error("Unable to process image:", uploadError);
-        setError(uploadError.message || "Unable to process image.");
-      });
+    const room = MAX_PRODUCT_IMAGES - form.images.length;
+    if (room <= 0) {
+      setError(`You can add at most ${MAX_PRODUCT_IMAGES} images per product.`);
+      return;
+    }
+
+    try {
+      const processed = [];
+      for (const file of files.slice(0, room)) {
+        processed.push(await compressImageFile(file));
+      }
+      setForm((prev) => ({
+        ...prev,
+        images: [...prev.images, ...processed].slice(0, MAX_PRODUCT_IMAGES),
+      }));
+      if (files.length > room) {
+        setError(`Only ${MAX_PRODUCT_IMAGES} images are allowed. Extra files were skipped.`);
+      }
+    } catch (uploadError) {
+      console.error("Unable to process image:", uploadError);
+      setError(uploadError.message || "Unable to process image.");
+    }
+  };
+
+  const handleAddImageUrl = () => {
+    const url = form.imageUrlInput.trim();
+    if (!url) return;
+    if (form.images.length >= MAX_PRODUCT_IMAGES) {
+      setError(`You can add at most ${MAX_PRODUCT_IMAGES} images per product.`);
+      return;
+    }
+    setError("");
+    setForm((prev) => ({ ...prev, images: [...prev.images, url], imageUrlInput: "" }));
+  };
+
+  const handleRemoveImage = (index) => {
+    setForm((prev) => ({ ...prev, images: prev.images.filter((_, i) => i !== index) }));
+  };
+
+  const handleMakeCover = (index) => {
+    setForm((prev) => {
+      const next = [...prev.images];
+      const [picked] = next.splice(index, 1);
+      return { ...prev, images: [picked, ...next] };
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -137,8 +201,10 @@ const AdminProducts = () => {
         description: form.description.trim(),
         price: Number(form.price),
         stockQuantity: Number(form.stockQuantity),
-        imageUrl: form.imageUrl,
+        imageUrls: form.images,
         categoryId: resolvedCategoryId,
+        subCategoryId:
+          categoryMode === "existing" && form.subCategoryId ? Number(form.subCategoryId) : null,
       };
 
       if (editing) {
@@ -155,18 +221,34 @@ const AdminProducts = () => {
     }
   };
 
-  const handleEdit = (product) => {
+  const handleEdit = async (product) => {
     setEditing(product);
     setCategoryMode("existing");
+    setError("");
+
+    let images = product.imageUrl ? [product.imageUrl] : [];
+    try {
+      // The list only carries the cover photo; the details call returns every photo.
+      const detail = await api.get(`/api/products/${product.id}`);
+      if (Array.isArray(detail?.data?.images) && detail.data.images.length > 0) {
+        images = detail.data.images;
+      }
+    } catch (err) {
+      console.error("Unable to load product photos:", err);
+    }
+
     setForm({
       name: product.name || "",
       description: product.description || "",
       price: product.price?.toString() || "",
       stockQuantity: product.stockQuantity?.toString() || "",
-      imageUrl: product.imageUrl || "",
+      images,
+      imageUrlInput: "",
       categoryId: product.category?.id?.toString() || product.category || "",
+      subCategoryId: product.subCategory?.id?.toString() || "",
       newCategoryName: "",
     });
+    document.getElementById("admin-product-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const handleDelete = async (id) => {
@@ -201,6 +283,9 @@ const AdminProducts = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <h1 className="text-4xl font-bold">Manage Products</h1>
           <p className="text-amber-100/85 mt-2">Create, update, and manage the product catalog</p>
+          <Link to="/admin/categories" className="mt-4 inline-block rounded-lg border border-amber-200/50 px-4 py-2 text-sm font-semibold text-[#f7e4ac] hover:bg-white/10 transition">
+            Manage categories (rename / delete)
+          </Link>
         </div>
       </div>
 
@@ -289,6 +374,30 @@ const AdminProducts = () => {
                     />
                   )}
 
+                  {categoryMode === "existing" && form.categoryId && (
+                    <div className="mt-3">
+                      <label className="form-label">Sub-category (optional)</label>
+                      <select
+                        name="subCategoryId"
+                        value={form.subCategoryId}
+                        onChange={handleChange}
+                        className="input"
+                      >
+                        <option value="">No sub-category</option>
+                        {availableSubCategories.map((sub) => (
+                          <option key={sub.id} value={sub.id}>
+                            {sub.name}
+                          </option>
+                        ))}
+                      </select>
+                      {availableSubCategories.length === 0 && (
+                        <p className="mt-1 text-xs text-slate-500">
+                          No sub-categories yet for this category. Add them in "Manage categories".
+                        </p>
+                      )}
+                    </div>
+                  )}
+
                   <p className="mt-2 text-xs text-slate-500">
                     {categoryMode === "existing"
                       ? "Pick one of the existing categories for this product."
@@ -298,7 +407,7 @@ const AdminProducts = () => {
 
                 {/* Price */}
                 <div>
-                  <label className="form-label">Price ($) *</label>
+                  <label className="form-label">Price (₹) *</label>
                   <input
                     type="number"
                     name="price"
@@ -325,51 +434,74 @@ const AdminProducts = () => {
                   />
                 </div>
 
-                {/* Image File Upload */}
+                {/* Product photos (up to 4) */}
                 <div>
-                  <label className="form-label">Upload Image</label>
-                  <div className="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center cursor-pointer hover:border-[#d6b25f] hover:bg-[#f8eed3] transition">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      className="hidden"
-                      id="file-input"
-                    />
-                    <label htmlFor="file-input" className="cursor-pointer">
-                      <div className="text-[#2f446f]">
-                        <div>📸 Click to upload or drag & drop</div>
-                        <p className="text-xs text-slate-500 mt-1">
-                          PNG, JPG, GIF up to 10MB. Large images are resized automatically.
-                        </p>
-                      </div>
-                    </label>
-                  </div>
-                </div>
+                  <label className="form-label">
+                    Product Photos ({form.images.length}/{MAX_PRODUCT_IMAGES})
+                  </label>
+                  <p className="text-xs text-slate-500 mb-2">
+                    Add up to {MAX_PRODUCT_IMAGES} photos (front, side, back, detail). The first photo is the cover shown in the shop.
+                  </p>
 
-                {/* Image Preview */}
-                {form.imageUrl && (
-                  <div className="mt-4">
-                    <p className="text-sm font-medium text-slate-700 mb-2">Preview:</p>
-                    <img
-                      src={form.imageUrl}
-                      alt="Preview"
-                      className="w-full h-48 object-cover rounded-lg border border-slate-200"
-                    />
-                  </div>
-                )}
+                  {form.images.length < MAX_PRODUCT_IMAGES && (
+                    <div className="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center cursor-pointer hover:border-[#d6b25f] hover:bg-[#f8eed3] transition">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleFileChange}
+                        className="hidden"
+                        id="file-input"
+                      />
+                      <label htmlFor="file-input" className="cursor-pointer">
+                        <div className="text-[#2f446f]">
+                          <div>📸 Click to choose photos (you can select several)</div>
+                          <p className="text-xs text-slate-500 mt-1">
+                            PNG or JPG. Large images are resized automatically.
+                          </p>
+                        </div>
+                      </label>
+                    </div>
+                  )}
 
-                {/* Image URL */}
-                <div>
-                  <label className="form-label">Image URL (Optional)</label>
-                  <input
-                    type="url"
-                    name="imageUrl"
-                    value={form.imageUrl}
-                    onChange={handleChange}
-                    placeholder="https://example.com/image.jpg"
-                    className="input"
-                  />
+                  {form.images.length > 0 && (
+                    <div className="mt-3 grid grid-cols-2 gap-3">
+                      {form.images.map((src, index) => (
+                        <div key={`${index}-${src.slice(-24)}`} className="relative rounded-lg border border-slate-200 overflow-hidden bg-slate-50">
+                          <img src={src} alt={`Photo ${index + 1}`} className="w-full h-32 object-cover" />
+                          <span className="absolute top-1 left-1 rounded bg-black/60 px-2 py-0.5 text-[11px] text-white">
+                            {index === 0 ? "Cover" : `Photo ${index + 1}`}
+                          </span>
+                          <div className="flex justify-between gap-1 p-1 text-[11px]">
+                            {index !== 0 ? (
+                              <button type="button" onClick={() => handleMakeCover(index)} className="px-2 py-1 rounded bg-[#f8eed3] text-[#1f2a44] hover:bg-[#f2dfa8]">
+                                Make cover
+                              </button>
+                            ) : <span />}
+                            <button type="button" onClick={() => handleRemoveImage(index)} className="px-2 py-1 rounded bg-[#fde8ea] text-[#8c2f39] hover:bg-[#f9d3d7]">
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {form.images.length < MAX_PRODUCT_IMAGES && (
+                    <div className="mt-3 flex gap-2">
+                      <input
+                        type="url"
+                        name="imageUrlInput"
+                        value={form.imageUrlInput}
+                        onChange={handleChange}
+                        placeholder="Or paste an image link (optional)"
+                        className="input"
+                      />
+                      <button type="button" onClick={handleAddImageUrl} className="px-3 rounded-lg border border-[#c6a65d] bg-[#f8eed3] text-sm font-semibold text-[#1f2a44] whitespace-nowrap">
+                        Add
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* Description */}
@@ -467,6 +599,7 @@ const AdminProducts = () => {
                                 <div className="flex items-center gap-2 mt-1">
                                   <span className="text-xs bg-[#d9e1f2] text-[#2f446f] px-2 py-1 rounded">
                                     {product.category?.name || "Uncategorized"}
+                                    {product.subCategory?.name ? ` › ${product.subCategory.name}` : ""}
                                   </span>
                                   <span className="text-xs bg-[#e7f3e6] text-[#2f6f44] px-2 py-1 rounded">
                                     Stock: {product.stockQuantity || 0}

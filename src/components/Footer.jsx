@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { business } from "../config/business";
+import { business, whatsappLink } from "../config/business";
 
 const currentYear = new Date().getFullYear();
 const linkClass = "text-stone-600 hover:text-stone-900 transition";
@@ -42,12 +42,38 @@ const Footer = () => {
           <div>
             <h4 className="text-sm font-semibold tracking-wide uppercase text-stone-700">Contact</h4>
             <div className="mt-3 space-y-2 text-sm text-stone-600">
-              <p>Email: <a className="hover:text-stone-900" href={`mailto:${business.supportEmail}`}>{business.supportEmail}</a></p>
-              <p>Phone: <a className="hover:text-stone-900" href={`tel:${business.phone.replace(/\s/g, "")}`}>{business.phone}</a></p>
-              <p>{business.addressLines.join(", ")}</p>
+              <p>Support: <a className="hover:text-stone-900 break-all" href={`mailto:${business.supportEmail}`}>{business.supportEmail}</a></p>
+              <p>Sales: <a className="hover:text-stone-900 break-all" href={`mailto:${business.salesEmail}`}>{business.salesEmail}</a></p>
+              {business.phones.map((p) => (
+                <p key={p.tel}>
+                  {p.label}: <a className="hover:text-stone-900" href={`tel:${p.tel}`}>{p.display}</a>
+                </p>
+              ))}
               <p className="text-xs text-stone-500">{business.supportHours}</p>
             </div>
+            <a
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#25D366] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1fb857] transition"
+            >
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.2.7 3 .6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z" />
+              </svg>
+              Chat on WhatsApp
+            </a>
           </div>
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-stone-600">
+          {business.addresses.map((address) => (
+            <div key={address.label}>
+              <h4 className="text-sm font-semibold tracking-wide uppercase text-stone-700">{address.label}</h4>
+              <p className="mt-2 leading-relaxed">
+                {address.lines.map((line, i) => (<span key={i}>{line}{i < address.lines.length - 1 ? <br /> : null}</span>))}
+              </p>
+            </div>
+          ))}
         </div>
 
         <div className="mt-10 border-t border-stone-300 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-stone-500">

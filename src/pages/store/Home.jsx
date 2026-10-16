@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchProducts, fetchProductsByCategory, searchProducts } from "../../api/productApi";
-import { fetchCategories } from "../../api/categoryApi";
+import { fetchCategories, fetchSubCategories } from "../../api/categoryApi";
 import { fetchHeroSlides } from "../../api/heroSlideApi";
 import { addToCart } from "../../api/cartApi";
 import { useAuth } from "../../context/AuthContext";
@@ -9,6 +9,7 @@ import { useCart } from "../../context/CartContext";
 import { useToast } from "../../context/ToastContext";
 import Loader from "../../components/Loader";
 import ProductCard from "../../components/ProductCard";
+import OurProjects from "../../components/OurProjects";
 
 const PAGE_SIZE = 30;
 
@@ -64,6 +65,9 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState(["All"]);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [subCategories, setSubCategories] = useState([]);
+  const [activeSub, setActiveSub] = useState(null);
+  const shopRef = useRef(null);
   const [search, setSearch] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [heroSlides, setHeroSlides] = useState(DEFAULT_HERO_SLIDES);
@@ -132,6 +136,18 @@ const Home = () => {
     };
 
     loadCategories();
+
+    const loadSubCategories = async () => {
+      try {
+        const response = await fetchSubCategories();
+        const data = response?.data?.data || response?.data;
+        setSubCategories(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Unable to load sub-categories:", err);
+      }
+    };
+
+    loadSubCategories();
   }, []);
 
   useEffect(() => {
@@ -203,13 +219,21 @@ const Home = () => {
     }
   };
 
+  const activeSubCategories = subCategories.filter((sub) => sub.categoryName === activeCategory);
+  const visibleProducts =
+    activeCategory !== "All" && activeSub
+      ? products.filter((product) => product?.subCategory?.id === activeSub)
+      : products;
+
   const handleCategorySelect = async (category) => {
     if (category === activeCategory) {
       return;
     }
 
     setActiveCategory(category);
+    setActiveSub(null);
     setError("");
+    setTimeout(() => shopRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
 
     if (category === "All") {
       await loadProducts(0);
@@ -274,17 +298,17 @@ const Home = () => {
               <img
                 src={slide.image}
                 alt={slide.label}
-                className={`h-full w-full object-cover transition-transform duration-[4500ms] ${
+                className={`h-full w-full object-cover brightness-110 saturate-105 transition-transform duration-[4500ms] ${
                   currentSlide === index ? "scale-105" : "scale-100"
                 }`}
               />
             </div>
           ))}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#131b2f]/85 via-[#1f2a44]/72 to-[#35466e]/58" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#131b2f]/55 via-[#1f2a44]/22 to-transparent" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 h-full min-h-[520px] sm:min-h-[560px] lg:min-h-[620px] flex flex-col justify-center">
-          <div className={`max-w-3xl min-h-[220px] ${getTextPositionClasses(slides[currentSlide].textPosition)}`}>
+          <div className={`max-w-3xl min-h-[220px] [text-shadow:0_2px_14px_rgba(10,16,32,0.55)] ${getTextPositionClasses(slides[currentSlide].textPosition)}`}>
             <span className="inline-flex items-center rounded-full bg-white/20 px-4 py-1.5 text-sm font-semibold tracking-wide backdrop-blur-sm">
               {slides[currentSlide].label}
             </span>
@@ -326,6 +350,9 @@ const Home = () => {
         </div>
       </div>
 
+      {/* Our Projects showcase (hidden automatically when no active projects) */}
+      <OurProjects />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Categories Filter */}
         {categories.length > 1 && (
@@ -353,6 +380,7 @@ const Home = () => {
                 </button>
               ))}
             </div>
+
           </div>
         )}
 
@@ -391,13 +419,33 @@ const Home = () => {
           </div>
         )}
 
+        <div ref={shopRef} className="scroll-mt-24">
+        {activeCategory !== "All" && activeSubCategories.length > 0 && (
+          <div className="mb-6 flex flex-wrap items-center gap-2">
+            {[{ id: null, name: "All" }, ...activeSubCategories].map((sub) => (
+              <button
+                key={sub.id ?? "all"}
+                onClick={() => setActiveSub(sub.id)}
+                className={`rounded-full border px-4 py-1.5 text-sm font-semibold transition ${
+                  activeSub === sub.id
+                    ? "border-[#223154] bg-[#1c2742] text-[#f7e4ac]"
+                    : "border-[#d9c791] bg-white/90 text-[#1f2a44] hover:bg-[#f8eed3]"
+                }`}
+              >
+                {sub.name}
+              </button>
+            ))}
+          </div>
+        )}
+        </div>
+
         {/* Products Grid */}
         {loading ? (
           <Loader />
-        ) : products.length ? (
+        ) : visibleProducts.length ? (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {products.map((product) => (
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+              {visibleProducts.map((product) => (
                 <ProductCard key={product.id} product={product} onAddToCart={handleAddToCart} />
               ))}
             </div>

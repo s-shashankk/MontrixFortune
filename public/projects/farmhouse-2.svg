@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="farmhouse sample 2">
+<defs>
+<linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7dece"/><stop offset="1" stop-color="#c4cdbb"/></linearGradient>
+<linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#af8e67"/><stop offset="1" stop-color="#866a48"/></linearGradient>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe0f5"/><stop offset="1" stop-color="#f5ecd0"/></linearGradient>
+<radialGradient id="vig" cx="0.5" cy="0.45" r="0.8"><stop offset="0.6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.28"/></radialGradient>
+</defs>
+<rect width="1200" height="900" fill="url(#wall)"/>
+<rect y="640" width="1200" height="260" fill="url(#floor)"/>
+<rect y="626" width="1200" height="14" fill="#aab1a1"/>
+<line x1="0" y1="670" x2="1200" y2="670" stroke="#000" stroke-opacity="0.05" stroke-width="2"/><line x1="0" y1="708" x2="1200" y2="708" stroke="#000" stroke-opacity="0.05" stroke-width="2"/><line x1="0" y1="746" x2="1200" y2="746" stroke="#000" stroke-opacity="0.05" stroke-width="2"/><line x1="0" y1="784" x2="1200" y2="784" stroke="#000" stroke-opacity="0.05" stroke-width="2"/><line x1="0" y1="822" x2="1200" y2="822" stroke="#000" stroke-opacity="0.05" stroke-width="2"/><line x1="0" y1="860" x2="1200" y2="860" stroke="#000" stroke-opacity="0.05" stroke-width="2"/><line x1="0" y1="898" x2="1200" y2="898" stroke="#000" stroke-opacity="0.05" stroke-width="2"/>
+<g><rect x="70" y="100" width="320" height="350" rx="6" fill="#f4efe6"/>
+<rect x="80" y="110" width="300" height="330" fill="url(#sky)"/>
+<rect x="226.0" y="110" width="8" height="330" fill="#f4efe6"/><rect x="80" y="271.0" width="300" height="8" fill="#f4efe6"/>
+<polygon points="80,440 380,440 540,800 20,800" fill="#fff3cc" opacity="0.10"/></g><g><rect x="560" y="130" width="220" height="160" fill="#fff" stroke="#3b3b3b" stroke-width="6"/>
+<rect x="572" y="142" width="196" height="136" fill="#e0a63a"/>
+<circle cx="696.4" cy="194.0" r="28.799999999999997" fill="#5b7a8a"/>
+<path d="M572 278 L648.0 218.0 L714.0 278 Z" fill="#445c68" opacity="0.8"/></g><g><rect x="820" y="170" width="130" height="190" fill="#fff" stroke="#3b3b3b" stroke-width="6"/>
+<rect x="832" y="182" width="106" height="166" fill="#5b7a8a"/>
+<circle cx="900.6" cy="246.0" r="23.4" fill="#e0a63a"/>
+<path d="M832 348 L872.0 274.5 L911.0 348 Z" fill="#a87c2c" opacity="0.8"/></g><g><ellipse cx="620" cy="730" rx="430" ry="62" fill="#e0a63a" opacity="0.55"/>
+<ellipse cx="620" cy="730" rx="352.59999999999997" ry="48" fill="none" stroke="#fff" stroke-width="5" opacity="0.55"/></g><g><rect x="440" y="405" width="520" height="130" rx="36" fill="#c6c2b8"/>
+<rect x="406" y="455" width="64" height="140" rx="28" fill="#f1ece0"/>
+<rect x="930" y="455" width="64" height="140" rx="28" fill="#f1ece0"/>
+<rect x="462" y="470" width="236.0" height="90" rx="22" fill="#f2eee2"/>
+<rect x="702.0" y="470" width="236.0" height="90" rx="22" fill="#f2eee2"/>
+<rect x="450" y="560" width="500" height="26" rx="10" fill="#c6c2b8"/>
+<rect x="460" y="586" width="12" height="26" fill="#8a5e38"/><rect x="928" y="586" width="12" height="26" fill="#8a5e38"/>
+<rect x="494" y="484" width="64" height="62" rx="14" fill="#e0a63a" transform="rotate(-8 526 515)"/>
+<rect x="840" y="484" width="64" height="62" rx="14" fill="#5b7a8a" transform="rotate(7 872 515)"/></g><g><ellipse cx="690.0" cy="740" rx="143.0" ry="20" fill="#000" opacity="0.10"/>
+<rect x="560" y="654" width="260" height="18" rx="8" fill="#8a5e38"/>
+<rect x="580" y="672" width="10" height="64" fill="#68462a"/><rect x="790" y="672" width="10" height="64" fill="#68462a"/>
+<rect x="638.0" y="628" width="44" height="26" rx="4" fill="#e0a63a"/>
+<ellipse cx="742.0" cy="650" rx="22" ry="5" fill="#fff"/><path d="M724.0 650 L760.0 650 L754.0 618 L730.0 618Z" fill="#5b7a8a"/></g><g><rect x="1007" y="390" width="6" height="250" fill="#2e2e2e"/>
+<ellipse cx="1010" cy="642" rx="38" ry="9" fill="#2e2e2e"/>
+<path d="M962 390 L1058 390 L1040 310 L980 310 Z" fill="#fff3cc"/>
+<ellipse cx="1010" cy="390" rx="48" ry="9" fill="#fff8e0" opacity="0.8"/></g><g transform="translate(1100,670) scale(1.25)"><path d="M-34 0 L34 0 L26 -70 L-26 -70 Z" fill="#b5835a"/>
+<ellipse cx="0" cy="-72" rx="30" ry="8" fill="#8e6342"/>
+<path d="M0 -75 C-60 -130 -70 -190 -30 -230 C-20 -170 -10 -130 0 -75Z" fill="#4f7d4a"/>
+<path d="M0 -75 C60 -140 70 -200 28 -250 C18 -180 12 -130 0 -75Z" fill="#5f9158"/>
+<path d="M0 -75 C-10 -140 -5 -200 8 -270 C25 -200 14 -140 0 -75Z" fill="#3f6b3c"/></g>
+<rect width="1200" height="900" fill="url(#vig)"/>
+<g opacity="0.85"><rect x="24" y="836" width="214" height="38" rx="19" fill="#000" opacity="0.45"/><text x="131" y="861" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#fff">Sample photo – replace</text></g>
+</svg>

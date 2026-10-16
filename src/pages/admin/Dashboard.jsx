@@ -52,7 +52,7 @@ const Dashboard = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
           <Link
             to="/admin/products"
             className="bg-white/95 rounded-xl shadow-md p-6 hover:shadow-xl transition border border-[#e6d8b4] hover:border-[#c7ab63]"
@@ -115,6 +115,19 @@ const Dashboard = () => {
                 <p className="text-xl font-bold text-[#1f2a44] mt-1">Slides • Text • Order</p>
               </div>
               <span className="text-4xl">🖼️</span>
+            </div>
+          </Link>
+
+          <Link
+            to="/admin/projects"
+            className="bg-white/95 rounded-xl shadow-md p-6 hover:shadow-xl transition border border-[#e6d8b4] hover:border-[#c7ab63]"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-[#5b6780] text-sm font-medium">Our Projects</p>
+                <p className="text-xl font-bold text-[#1f2a44] mt-1">Photos • Story • Order</p>
+              </div>
+              <span className="text-4xl">🏠</span>
             </div>
           </Link>
         </div>

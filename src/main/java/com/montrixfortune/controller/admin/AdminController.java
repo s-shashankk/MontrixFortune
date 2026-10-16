@@ -2,6 +2,7 @@ package com.montrixfortune.controller.admin;
 
 import com.montrixfortune.dto.ApiResponse;
 import com.montrixfortune.dto.category.CategoryRequest;
+import com.montrixfortune.dto.category.SubCategoryRequest;
 import com.montrixfortune.dto.order.admin.AdminOrderDetailResponse;
 import com.montrixfortune.dto.order.admin.AdminOrderSummaryResponse;
 import com.montrixfortune.dto.product.ProductRequest;
@@ -95,6 +96,41 @@ public class AdminController {
     public ApiResponse<Category> createCategory(@Valid @RequestBody CategoryRequest request) {
         Category category = adminService.createCategory(request);
         return new ApiResponse<>(true, "Category created", 201, java.time.LocalDateTime.now(), category);
+    }
+
+    @PutMapping("/categories/{id}")
+    public ApiResponse<Category> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryRequest request) {
+        Category category = adminService.updateCategory(id, request);
+        return new ApiResponse<>(true, "Category updated", 200, java.time.LocalDateTime.now(), category);
+    }
+
+    @DeleteMapping("/categories/{id}")
+    public ApiResponse<Void> deleteCategory(@PathVariable Long id) {
+        adminService.deleteCategory(id);
+        return new ApiResponse<>(true, "Category deleted", 200, java.time.LocalDateTime.now(), null);
+    }
+
+    @GetMapping("/sub-categories")
+    public List<SubCategory> getSubCategories() {
+        return adminService.getAllSubCategories();
+    }
+
+    @PostMapping("/sub-categories")
+    public ApiResponse<SubCategory> createSubCategory(@Valid @RequestBody SubCategoryRequest request) {
+        SubCategory subCategory = adminService.createSubCategory(request);
+        return new ApiResponse<>(true, "Sub-category created", 201, java.time.LocalDateTime.now(), subCategory);
+    }
+
+    @PutMapping("/sub-categories/{id}")
+    public ApiResponse<SubCategory> updateSubCategory(@PathVariable Long id, @Valid @RequestBody SubCategoryRequest request) {
+        SubCategory subCategory = adminService.updateSubCategory(id, request);
+        return new ApiResponse<>(true, "Sub-category updated", 200, java.time.LocalDateTime.now(), subCategory);
+    }
+
+    @DeleteMapping("/sub-categories/{id}")
+    public ApiResponse<Void> deleteSubCategory(@PathVariable Long id) {
+        adminService.deleteSubCategory(id);
+        return new ApiResponse<>(true, "Sub-category deleted", 200, java.time.LocalDateTime.now(), null);
     }
 
     @GetMapping("/payments")

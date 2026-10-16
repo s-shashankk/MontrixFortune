@@ -11,7 +11,7 @@ const policyLinks = [
   { to: "/contact", label: "Contact Us" },
 ];
 
-const LegalLayout = ({ title, intro, showUpdated = true, children }) => {
+const LegalLayout = ({ title, intro, showUpdated = true, warm = false, children }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = `${title} | ${business.brandName}`;
@@ -25,7 +25,13 @@ const LegalLayout = ({ title, intro, showUpdated = true, children }) => {
         <span className="text-stone-700">{title}</span>
       </nav>
 
-      <article className="rounded-xl border border-amber-100 bg-white shadow-sm p-6 sm:p-10">
+      <article
+        className={
+          warm
+            ? "rounded-2xl border border-[#d6c08d] bg-gradient-to-br from-[#fbf3dc] via-[#f6ead0] to-[#efe0b8] shadow-md p-6 sm:p-10"
+            : "rounded-xl border border-amber-100 bg-white shadow-sm p-6 sm:p-10"
+        }
+      >
         <h1 className="text-4xl font-bold text-stone-900">{title}</h1>
         {showUpdated ? <p className="mt-1 text-sm text-stone-500">Last updated: {business.lastUpdated}</p> : null}
         {intro ? <p className="mt-4 text-stone-700 leading-relaxed">{intro}</p> : null}

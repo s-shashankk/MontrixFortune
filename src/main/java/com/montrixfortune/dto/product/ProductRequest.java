@@ -26,7 +26,14 @@ public class ProductRequest {
     private Integer stockQuantity;
     
     private String imageUrl;
+
+    /** Up to 4 photos (first one is the cover). When present it replaces imageUrl. */
+    @jakarta.validation.constraints.Size(max = 4, message = "You can add at most 4 images per product")
+    private java.util.List<String> imageUrls;
     
     @NotNull(message = "Category ID is required")
     private Long categoryId;
+
+    /** Optional sub-category inside the chosen category. Null means "no sub-category". */
+    private Long subCategoryId;
 }

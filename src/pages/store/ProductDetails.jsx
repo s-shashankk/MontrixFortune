@@ -17,12 +17,14 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [activeImage, setActiveImage] = useState(0);
 
   useEffect(() => {
     const load = async () => {
       try {
         const response = await fetchProductById(id);
         setProduct(response.data);
+        setActiveImage(0);
       } catch (err) {
         console.error("Failed to load product details:", err);
         setError(err.response?.data?.message || "Unable to load product details.");
@@ -54,6 +56,17 @@ const ProductDetails = () => {
     }
   };
 
+  const gallery = product
+    ? (Array.isArray(product.images) && product.images.length > 0
+        ? product.images
+        : product.imageUrl
+          ? [product.imageUrl]
+          : [])
+    : [];
+  const currentImage = gallery[Math.min(activeImage, Math.max(gallery.length - 1, 0))];
+  const showPrev = () => setActiveImage((i) => (i - 1 + gallery.length) % gallery.length);
+  const showNext = () => setActiveImage((i) => (i + 1) % gallery.length);
+
   if (loading) return <Loader />;
   if (error) return <div className="empty-state">{error}</div>;
   if (!product) return <div className="empty-state">Product not found.</div>;
@@ -76,18 +89,59 @@ const ProductDetails = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white rounded-lg shadow-md p-6 md:p-10">
           {/* Image Section */}
-          <div className="flex items-center justify-center bg-slate-100 rounded-lg aspect-square overflow-hidden">
-            {product.imageUrl ? (
-              <img
-                src={product.imageUrl}
-                alt={product.name}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              />
-            ) : (
-              <div className="flex items-center justify-center h-full text-slate-400">
-                <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
-                </svg>
+          <div>
+            <div className="relative flex items-center justify-center bg-slate-100 rounded-lg aspect-square overflow-hidden">
+              {currentImage ? (
+                <img
+                  src={currentImage}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full text-slate-400">
+                  <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
+                  </svg>
+                </div>
+              )}
+
+              {gallery.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={showPrev}
+                    aria-label="Previous photo"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-white/85 text-stone-800 shadow hover:bg-white"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    onClick={showNext}
+                    aria-label="Next photo"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-white/85 text-stone-800 shadow hover:bg-white"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+            </div>
+
+            {gallery.length > 1 && (
+              <div className="mt-3 grid grid-cols-4 gap-2">
+                {gallery.map((src, index) => (
+                  <button
+                    key={`${index}-${src.slice(-20)}`}
+                    type="button"
+                    onClick={() => setActiveImage(index)}
+                    aria-label={`Show photo ${index + 1}`}
+                    className={`aspect-square overflow-hidden rounded-md border-2 transition ${
+                      index === activeImage ? "border-stone-800" : "border-transparent hover:border-stone-400"
+                    }`}
+                  >
+                    <img src={src} alt={`${product.name} view ${index + 1}`} className="h-full w-full object-cover" />
+                  </button>
+                ))}
               </div>
             )}
           </div>

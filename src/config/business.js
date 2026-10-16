@@ -4,10 +4,23 @@
 export const business = {
   brandName: "Montrix Fortune",
   legalName: "Montrix Fortune",                        // CHANGE ME: registered business / proprietor name
-  addressLines: ["Bengaluru, Karnataka, India"],       // CHANGE ME: full registered address with PIN code
+  // Addresses shown on the Contact page and footer. The first one is used in the legal pages.
+  addresses: [
+    { label: "Office Address", lines: ["#127/128, 1st Main, Jyothi Nagar, Nayandalli Extension,", "Mysore Road, Bengaluru 560039"] },
+    { label: "Address 2", lines: ["#143, 17th Cross, Dhodanna Estate, Peenya 2nd Stage,", "Bengaluru 560058"] },
+  ],
   city: "Bengaluru",                                   // used for "courts at ..." in the Terms
-  supportEmail: "support@montrixfortune.com",          // CHANGE ME: a mailbox you really read
-  phone: "+91 98765 43210",                            // CHANGE ME: real support number
+
+  supportEmail: "support@montrixfortune.com",
+  salesEmail: "sales@montrixfortune.com",
+  phone: "+91 98806 17777",                            // main number (used in policy pages)
+  phones: [
+    { label: "Mobile", display: "+91 98806 17777", tel: "+919880617777" },
+    { label: "Mobile", display: "+91 98804 27777", tel: "+919880427777" },
+    { label: "Landline", display: "080 2675 6744", tel: "+918026756744" },
+  ],
+  whatsappNumber: "919880617777",                      // WhatsApp chat link (country code + number, digits only)
+  whatsappMessage: "Hello Montrix Fortune, I need help with ",
   supportHours: "Monday to Saturday, 10:00 AM to 6:00 PM IST",
   gstin: "",                                           // CHANGE ME: your GSTIN (shown only if filled in)
 
@@ -24,8 +37,14 @@ export const business = {
     shippingCharge: "Free",
   },
 
-  lastUpdated: "14 October 2026",
+  lastUpdated: "16 October 2026",
 };
+
+export const whatsappLink = (text) =>
+  `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(text ?? business.whatsappMessage)}`;
+
+// Single-line address used in legal pages.
+business.addressLines = [business.addresses[0].lines.join(" ")];
 
 export const grievance = () => ({
   name: business.grievanceOfficer.name || business.legalName,

@@ -32,3 +32,4 @@ target/
 .backup-before-hardening/
 uploads/
 HELP.md
+*.tgz

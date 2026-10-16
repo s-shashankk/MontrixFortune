@@ -9,7 +9,12 @@
   body {
     @apply text-slate-800;
     font-family: "Manrope", sans-serif;
-    background: radial-gradient(circle at 20% 0%, #fdf6dd 0%, #f8f3e6 28%, #f5f1e8 56%, #f6f4ef 100%);
+    background-color: #faf6ec;
+    background-image:
+      radial-gradient(900px 520px at 8% -4%, rgba(246, 222, 160, 0.55), transparent 60%),
+      radial-gradient(800px 520px at 100% 100%, rgba(196, 210, 235, 0.38), transparent 62%),
+      linear-gradient(180deg, #fffcf3 0%, #faf6ec 45%, #f4f1ea 100%);
+    background-attachment: fixed;
   }
 
   h1, h2, h3, h4 {
@@ -75,3 +80,7 @@
 .legal-prose strong { color: #1c1917; }
 .legal-prose table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
 .legal-prose th, .legal-prose td { border: 1px solid #e7e5e4; padding: 0.5rem 0.75rem; text-align: left; }
+
+/* Our Projects slideshow: swipeable row, scrollbar hidden */
+.projects-viewport { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.projects-viewport::-webkit-scrollbar { display: none; }

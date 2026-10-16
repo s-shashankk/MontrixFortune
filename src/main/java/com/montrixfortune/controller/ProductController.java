@@ -33,25 +33,33 @@ public class ProductController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
-        return productService.getProducts(page, size);
+        Page<Product> result = productService.getProducts(page, size);
+        result.getContent().forEach(this::fillImageCount);
+        return result;
     }
 
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id) {
 
-        return productService.getProductById(id);
+        Product product = productService.getProductById(id);
+        product.setImages(product.allImages());
+        return product;
     }
 
     @GetMapping("/category/{category}")
     public List<Product> getProductsByCategory(@PathVariable String category) {
 
-        return productService.getProductsByCategory(category);
+        List<Product> list = productService.getProductsByCategory(category);
+        list.forEach(this::fillImageCount);
+        return list;
     }
 
     @GetMapping("/search")
     public List<Product> searchProducts(@RequestParam String keyword) {
 
-        return productService.searchProducts(keyword);
+        List<Product> list = productService.searchProducts(keyword);
+        list.forEach(this::fillImageCount);
+        return list;
     }
 
     @PostMapping
@@ -78,6 +86,10 @@ public class ProductController {
         return new ApiResponse<>(true, "Product deleted", 200, LocalDateTime.now(), null);
     }
 
+    private void fillImageCount(Product product) {
+        product.setImageCount(product.allImages().size());
+    }
+
     private Product toProductEntity(ProductRequest request, Product product) {
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
@@ -86,7 +98,11 @@ public class ProductController {
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
         product.setStockQuantity(request.getStockQuantity());
-        product.setImageUrl(request.getImageUrl() == null ? "" : request.getImageUrl());
+        if (request.getImageUrls() != null) {
+            product.applyImageList(request.getImageUrls());
+        } else {
+            product.setImageUrl(request.getImageUrl() == null ? "" : request.getImageUrl());
+        }
         product.setCategory(category);
         return product;
     }

@@ -5,6 +5,7 @@ import com.montrixfortune.dto.order.admin.AdminOrderSummaryResponse;
 import com.montrixfortune.entity.*;
 import org.springframework.data.domain.Page;
 import com.montrixfortune.dto.category.CategoryRequest;
+import com.montrixfortune.dto.category.SubCategoryRequest;
 import com.montrixfortune.dto.product.ProductRequest;
 
 import java.util.List;
@@ -39,6 +40,14 @@ public interface AdminService {
     Category updateCategory(Long id, CategoryRequest request);
 
     void deleteCategory(Long id);
+
+    List<SubCategory> getAllSubCategories();
+
+    SubCategory createSubCategory(SubCategoryRequest request);
+
+    SubCategory updateSubCategory(Long id, SubCategoryRequest request);
+
+    void deleteSubCategory(Long id);
 
     Map<String, Object> getDashboardStats();
 

@@ -88,3 +88,14 @@ A backup of the original `src/` and `pom.xml` is in `.backup-before-hardening/` 
 ## Policy & info pages (added 14 Oct 2026)
 Added /about, /contact, /faq, /shipping-policy, /refund-policy, /privacy-policy, /terms with footer links and consent notes on Register and Checkout.
 **Before going live edit `src/config/business.js`**: legal name, full address + PIN, real email/phone, GSTIN, grievance officer, and delivery/return promises you will honour. The text is generic, not legal advice.
+
+## Update 16 Oct 2026
+- Up to 4 photos per product (new table `product_images`, created automatically on start; cover photo stays in `products.image_url`).
+- Admin: rename/delete categories (`/admin/categories`); delete is blocked while a category still has products.
+- Real contact details, two addresses, About Us text and a WhatsApp chat link in the footer (all in `src/config/business.js`).
+- Brighter hero banner and softer page background.
+
+## Update (16 Oct) – Sub-categories
+- Admin → Products → "Manage categories" page now also manages sub-categories (add / rename / delete). Products pick an optional sub-category in the product form.
+- Shop page shows "All" + the sub-categories of the selected category; clicking one filters the products.
+- Hibernate auto-creates `sub_categories` and `products.sub_category_id` on first start (`ddl-auto=update`).

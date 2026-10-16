@@ -12,7 +12,7 @@ const faqs = [
   ["What if my product arrives damaged?", `Report it within ${p.damageReportHours} hours of delivery with photos. Damaged, defective or wrong items can be returned or replaced within ${p.returnWindowDays} days.`],
   ["When will I get my refund?", `Approved refunds reach your original payment method within ${p.refundTime}. If a payment was debited but the order failed, it is refunded automatically.`],
   ["I was charged but my order shows pending. What should I do?", "Wait a few minutes and refresh My Orders. If it is still not confirmed, contact us with your payment reference and we will resolve or refund it."],
-  ["How can I contact you?", `Email ${business.supportEmail} or call ${business.phone} (${business.supportHours}).`],
+  ["How can I contact you?", `Email ${business.supportEmail}, call ${business.phones.map((p) => p.display).join(" / ")}, or chat with us on WhatsApp (${business.supportHours}).`],
 ];
 
 const FAQ = () => (

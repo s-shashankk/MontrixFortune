@@ -4,6 +4,7 @@ import com.montrixfortune.entity.Product;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -13,6 +14,12 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategoryId(Long categoryId);
     long countByCategoryId(Long categoryId);
+    long countBySubCategoryId(Long subCategoryId);
+
+    /** Used when a sub-category is deleted: its products simply lose the sub-category. */
+    @Modifying(clearAutomatically = true)
+    @Query("update Product p set p.subCategory = null where p.subCategory.id = :subCategoryId")
+    int clearSubCategory(@Param("subCategoryId") Long subCategoryId);
     List<Product> findByCategoryNameIgnoreCase(String categoryName);
     List<Product> findByNameContainingIgnoreCase(String keyword);
 

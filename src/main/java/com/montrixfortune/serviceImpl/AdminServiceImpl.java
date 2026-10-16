@@ -11,6 +11,7 @@ import com.montrixfortune.exception.ResourceNotFoundException;
 import com.montrixfortune.repository.*;
 import com.montrixfortune.service.AdminService;
 import com.montrixfortune.dto.category.CategoryRequest;
+import com.montrixfortune.dto.category.SubCategoryRequest;
 import com.montrixfortune.dto.product.ProductRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ public class AdminServiceImpl implements AdminService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final SubCategoryRepository subCategoryRepository;
     private final PaymentRepository paymentRepository;
     private final CartItemRepository cartItemRepository;
     private final OrderItemRepository orderItemRepository;
@@ -317,6 +319,7 @@ public class AdminServiceImpl implements AdminService {
     }
     
     @Override
+    @Transactional
     public Product createProduct(ProductRequest request) {
         Category category = resolveCategory(request.getCategoryId());
 
@@ -325,13 +328,19 @@ public class AdminServiceImpl implements AdminService {
         product.setPrice(request.getPrice());
         product.setDescription(request.getDescription());
         product.setStockQuantity(request.getStockQuantity() != null ? request.getStockQuantity() : 0);
-        product.setImageUrl(request.getImageUrl() != null ? request.getImageUrl() : "");
+        if (request.getImageUrls() != null) {
+            product.applyImageList(request.getImageUrls());
+        } else {
+            product.setImageUrl(request.getImageUrl() != null ? request.getImageUrl() : "");
+        }
         product.setCategory(category);
+        product.setSubCategory(resolveSubCategory(request.getSubCategoryId(), category));
         return productRepository.save(product);
     }
 
     @Override
-        public Product updateProduct(Long id, ProductRequest request) {
+    @Transactional
+    public Product updateProduct(Long id, ProductRequest request) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
@@ -345,9 +354,12 @@ public class AdminServiceImpl implements AdminService {
         if (request.getStockQuantity() != null) {
             product.setStockQuantity(request.getStockQuantity());
         }
-        if (request.getImageUrl() != null) {
+        if (request.getImageUrls() != null) {
+            product.applyImageList(request.getImageUrls());
+        } else if (request.getImageUrl() != null) {
             product.setImageUrl(request.getImageUrl());
         }
+        product.setSubCategory(resolveSubCategory(request.getSubCategoryId(), product.getCategory()));
         return productRepository.save(product);
     }
 
@@ -391,20 +403,39 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public Category updateCategory(Long id, CategoryRequest request) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
-        category.setName(normalizeCategoryName(request.getName()));
-        category.setDescription(request.getDescription());
+        String normalizedName = normalizeCategoryName(request.getName());
+        categoryRepository.findByNameIgnoreCase(normalizedName).ifPresent(other -> {
+            if (!other.getId().equals(id)) {
+                throw new OperationNotAllowedException("Another category already uses this name.");
+            }
+        });
+
+        category.setName(normalizedName);
+        if (request.getDescription() != null) {
+            category.setDescription(request.getDescription());
+        }
 
         return categoryRepository.save(category);
     }
 
     @Override
+    @Transactional
     public void deleteCategory(Long id) {
         Category category = categoryRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+
+        long productCount = productRepository.countByCategoryId(id);
+        if (productCount > 0) {
+            throw new OperationNotAllowedException("This category still has " + productCount
+                + " product" + (productCount == 1 ? "" : "s")
+                + ". Move or delete those products first, then delete the category.");
+        }
+        subCategoryRepository.deleteByCategoryId(id);
         categoryRepository.delete(category);
     }
 
@@ -423,6 +454,72 @@ public class AdminServiceImpl implements AdminService {
         stats.put("totalOrders", orderRepository.count());
         stats.put("totalProducts", productRepository.count());
         return stats;
+    }
+
+    @Override
+    public List<SubCategory> getAllSubCategories() {
+        return subCategoryRepository.findAll().stream()
+                .sorted(Comparator.comparing((SubCategory sub) -> sub.getName().toLowerCase(Locale.ROOT)))
+                .toList();
+    }
+
+    @Override
+    @Transactional
+    public SubCategory createSubCategory(SubCategoryRequest request) {
+        if (request.getCategoryId() == null) {
+            throw new OperationNotAllowedException("Please choose the main category for this sub-category.");
+        }
+        Category category = resolveCategory(request.getCategoryId());
+        String name = normalizeCategoryName(request.getName());
+        subCategoryRepository.findByCategoryIdAndNameIgnoreCase(category.getId(), name).ifPresent(existing -> {
+            throw new OperationNotAllowedException("This sub-category already exists in " + category.getName() + ".");
+        });
+
+        SubCategory subCategory = new SubCategory();
+        subCategory.setName(name);
+        subCategory.setCategory(category);
+        return subCategoryRepository.save(subCategory);
+    }
+
+    @Override
+    @Transactional
+    public SubCategory updateSubCategory(Long id, SubCategoryRequest request) {
+        SubCategory subCategory = subCategoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Sub-category not found"));
+
+        String name = normalizeCategoryName(request.getName());
+        subCategoryRepository.findByCategoryIdAndNameIgnoreCase(subCategory.getCategory().getId(), name)
+                .ifPresent(other -> {
+                    if (!other.getId().equals(id)) {
+                        throw new OperationNotAllowedException("Another sub-category in this category already uses this name.");
+                    }
+                });
+
+        subCategory.setName(name);
+        return subCategoryRepository.save(subCategory);
+    }
+
+    @Override
+    @Transactional
+    public void deleteSubCategory(Long id) {
+        SubCategory subCategory = subCategoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Sub-category not found"));
+        // Products keep existing; they just no longer have a sub-category.
+        productRepository.clearSubCategory(id);
+        subCategoryRepository.delete(subCategory);
+    }
+
+    private SubCategory resolveSubCategory(Long subCategoryId, Category category) {
+        if (subCategoryId == null) {
+            return null;
+        }
+        SubCategory subCategory = subCategoryRepository.findById(subCategoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Sub-category not found"));
+        if (category == null || subCategory.getCategory() == null
+                || !subCategory.getCategory().getId().equals(category.getId())) {
+            throw new OperationNotAllowedException("The selected sub-category does not belong to this category.");
+        }
+        return subCategory;
     }
 
     private Category resolveCategory(Long categoryId) {

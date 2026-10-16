@@ -25,3 +25,8 @@
 		file_server
 	}
 }
+
+# www.<domain> -> sends visitors to the main address (needs a DNS record for www too).
+www.{$DOMAIN:localhost} {
+	redir https://{$DOMAIN:localhost}{uri} permanent
+}
