@@ -140,11 +140,18 @@ public class CartServiceImpl implements CartService {
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(() -> new CartItemNotFoundException("Cart item not found"));
 
-        if (!cartItem.getCart().getId().equals(getOrCreateCart(getCurrentUser()).getId())) {
+        Cart cart = getOrCreateCart(getCurrentUser());
+        if (!cartItem.getCart().getId().equals(cart.getId())) {
             throw new CartItemNotFoundException("Cart item not found");
         }
 
+        // Cart.items is cascade=ALL + orphanRemoval and eagerly loaded: if the item stays in that
+        // collection, Hibernate re-saves it on flush and the delete is silently undone.
+        if (cart.getItems() != null) {
+            cart.getItems().removeIf(item -> cartItemId.equals(item.getId()));
+        }
         cartItemRepository.delete(cartItem);
+        cartItemRepository.flush();
     }
 
     @Override
@@ -155,6 +162,11 @@ public class CartServiceImpl implements CartService {
 
         List<CartItem> items = cartItemRepository.findByCart(cart);
 
+        // Detach from the parent collection first, otherwise cascade re-saves the deleted rows.
+        if (cart.getItems() != null) {
+            cart.getItems().clear();
+        }
         cartItemRepository.deleteAll(items);
+        cartItemRepository.flush();
     }
 }

@@ -45,7 +45,12 @@ const Cart = () => {
   }, [auth, navigate]);
 
   const handleQuantityChange = async (itemId, quantity) => {
-    if (quantity < 1) return;
+    if (!Number.isFinite(quantity)) return;
+    if (quantity < 1) {
+      // Pressing "−" on a quantity of 1 removes the item completely.
+      await handleRemove(itemId);
+      return;
+    }
     try {
       await updateCartQuantity(itemId, quantity);
       await loadCart();
@@ -56,7 +61,9 @@ const Cart = () => {
 
   const handleRemove = async (itemId) => {
     try {
+      setError("");
       await removeFromCart(itemId);
+      showToast("Item removed from cart.", "success");
       await loadCart();
     } catch (err) {
       setError(err.response?.data?.message || "Failed to remove item.");
@@ -147,7 +154,10 @@ const Cart = () => {
                             type="number"
                             min="1"
                             value={item.quantity}
-                            onChange={(e) => handleQuantityChange(item.id, Number(e.target.value))}
+                            onChange={(e) => {
+                              const next = Number(e.target.value);
+                              if (next >= 1) handleQuantityChange(item.id, next); // typing 0/blank must not delete the item
+                            }}
                             className="w-12 text-center border-0 bg-transparent font-semibold text-slate-900 focus:outline-none"
                           />
                           <button
