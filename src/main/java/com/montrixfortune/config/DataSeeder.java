@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
  *   APP_SEED_DEMO_USERS=true                   also create user@montrix.com / admin@montrix.com demo logins (LOCAL DEV ONLY)
  *   APP_SEED_CATALOG=true (default)            when the products table is empty, load catalog/products.json and default hero slides
  *   APP_SEED_REPLACE_CATALOG=true              one-off: remove old dummy "... Collection Item NN" products and add the curated catalog
- *                                              (admin-created products and products already used in orders are never deleted)
+ *  few changes                                            (admin-created products and products already used in orders are never deleted)
  */
 @Slf4j
 @Component
